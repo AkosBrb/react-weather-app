@@ -1,0 +1,15 @@
+#additional-data-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+}
+#wind-container, #humidity-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+#wind-container > span, #humidity-container > span {
+    font-size: 45px; 
+}

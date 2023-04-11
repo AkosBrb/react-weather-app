@@ -1,0 +1,21 @@
+#temperature-container {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: end;
+    align-items: center;
+    width: 400px;
+    height: 350px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    border-radius: 20px;
+}
+#temperature-container img {
+    width: 150px;
+}
+#temperature-integer {
+    font-size: 80px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
