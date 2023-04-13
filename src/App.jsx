@@ -34,7 +34,6 @@ function App() {
       .then(response => response.json())
       .then(weatherData => {
         setData(weatherData)
-        console.log(weatherData)
       })
   }, [longitude, latitude])
 
