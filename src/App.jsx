@@ -2,7 +2,7 @@ import AdditionalData from './AdditionalData/AdditionalData'
 import Search from './Search/Search'
 import Temperature from './Temperature/Temperature'
 import './App.css'
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function App() {
 
@@ -12,29 +12,26 @@ function App() {
   const [latitude, setLatiTude] = useState('')
   const apiKey = 'c3d51ea689596d793b31f2a7389e400d'
 
-  const firstUpdate = useRef(true);
-  useLayoutEffect(() => {
-    if (firstUpdate.current) {
-      return;
+  useEffect(() => {
+    if (city) {
+      fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
+        .then(response => response.json())
+        .then(coordinates => {
+          setLongitude(coordinates[0].lon)
+          setLatiTude(coordinates[0].lat)
+        })
     }
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
-      .then(response => response.json())
-      .then(coordinates => {
-        setLongitude(coordinates[0].lon)
-        setLatiTude(coordinates[0].lat)
-      })
   }, [city])
 
-  useLayoutEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
+  useEffect(() => {
+    if (longitude && latitude) {
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`)
+        .then(response => response.json())
+        .then(weatherData => {
+          setData(weatherData)
+          console.log(weatherData)
+        })
     }
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`)
-      .then(response => response.json())
-      .then(weatherData => {
-        setData(weatherData)
-      })
   }, [longitude, latitude])
 
   return (
