@@ -2,7 +2,7 @@ import AdditionalData from './AdditionalData/AdditionalData'
 import Search from './Search/Search'
 import Temperature from './Temperature/Temperature'
 import './App.css'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
 
@@ -12,6 +12,13 @@ function App() {
   const [latitude, setLatiTude] = useState('')
   const apiKey = 'c3d51ea689596d793b31f2a7389e400d'
 
+  let containerClassName = "first-load"
+  let firstRender = false;
+
+  if (city) {
+    containerClassName = "container"
+    firstRender = true
+  }
   useEffect(() => {
     if (city) {
       fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
@@ -35,10 +42,17 @@ function App() {
   }, [longitude, latitude])
 
   return (
-    <div className='inside-container'>
-      <Search city={city} setCity={setCity} />
-      <Temperature data={data} />
-      <AdditionalData data={data} />
+    <div className={containerClassName}>
+      <div className='inside-container'>
+        <Search city={city} setCity={setCity} />
+        {
+          city &&
+          <>
+            <Temperature data={data} />
+            <AdditionalData data={data} />
+          </>
+        }
+      </div>
     </div>
   )
 }
