@@ -36,8 +36,11 @@ function App() {
         .then(response => response.json())
         .then(weatherData => {
           setData(weatherData)
-          console.log(weatherData)
+          console.log('actual', weatherData)
         })
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&cnt=3&appid=${apiKey}&units=metric`)
+        .then(res => res.json())
+        .then(data => console.log("forecast", data))
     }
   }, [longitude, latitude])
 
